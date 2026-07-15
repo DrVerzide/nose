@@ -68,12 +68,21 @@ AMARILLO_ACENTO_HEX = "F2C230"   # botones y acentos principales
 CAFE_TEXTO_HEX      = "4A3F2A"   # texto principal sobre baige
 CAFE_SUAVE_HEX      = "8A6D1F"   # texto secundario / enlaces
 GRIS_PLACEHOLDER    = "8A8A8A"
+# --- CORRECCIÓN DE RUTA PARA COEXISTIR CON PYINSTALLER (.EXE) ---
+import sys
 
-RUTA_BASE = os.path.dirname(os.path.abspath(__file__))
+if getattr(sys, 'frozen', False):
+    # Si es un ejecutable (.exe), la ruta base es la carpeta donde está el ejecutable real
+    RUTA_BASE = os.path.dirname(sys.executable)
+else:
+    # Si se ejecuta como script .py normal
+    RUTA_BASE = os.path.dirname(os.path.abspath(__file__))
+
 RUTA_LOGO_UNACH = os.path.join(RUTA_BASE, "logo_unach.png")
 RUTA_USUARIOS_JSON = os.path.join(RUTA_BASE, "usuarios_registrados.json")
 RUTA_FOTOS_PERFIL = os.path.join(RUTA_BASE, "fotos_perfil")
 os.makedirs(RUTA_FOTOS_PERFIL, exist_ok=True)
+
 
 ANCHO_CARNET = 240
 ALTO_CARNET = 320
@@ -2477,7 +2486,7 @@ class AppMenuGlobal:
         self.txt_resultado_vectorial.insert("1.0", texto_resultado)
         self.txt_resultado_vectorial.config(state="disabled")
 
-    # ============================================================== SOBRE NOSOTROS
+    #  SOBRE NOSOTROS
     def construir_pantalla_sobre_nosotros(self):
         wrapper = tk.Frame(self.frame_sobre_nosotros, bg=f"#{BLANCO_HEX}")
         wrapper.pack(fill="both", expand=True)
@@ -2523,7 +2532,7 @@ class AppMenuGlobal:
             fg=f"#{CAFE_TEXTO_HEX}", wraplength=640, justify="left",
         ).pack(pady=(0, 10))
 
-    # ============================================================== INTEGRANTES
+    #  INTEGRANTES
     def construir_pantalla_integrantes(self):
         encabezado = tk.Frame(self.frame_integrantes, bg=f"#{BLANCO_HEX}")
         encabezado.pack(fill="x", pady=(20, 10), padx=20)
@@ -2639,7 +2648,7 @@ class AppMenuGlobal:
             font=("Segoe UI", 11), bg=f"#{BLANCO_HEX}", fg=f"#{CAFE_TEXTO_HEX}", justify="center",
         ).pack()
 
-    # ============================================================== NAVEGACION CON CONTENIDO REAL
+    #  NAVEGACION CON CONTENIDO REAL
     def _encabezado_seccion(self, frame, etiqueta, titulo, subtitulo):
         contenedor = tk.Frame(frame, bg=f"#{BLANCO_HEX}")
         contenedor.pack(fill="x", pady=(24, 10), padx=30)
